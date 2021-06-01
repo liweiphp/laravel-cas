@@ -1,4 +1,4 @@
-<?php namespace Sentrasoft\Cas\Middleware;
+<?php namespace ncmps\Cas\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;

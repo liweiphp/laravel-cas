@@ -1,5 +1,5 @@
 <?php
-namespace Sentrasoft\Cas\Contracts;
+namespace ncmps\Cas\Contracts;
 
 interface User
 {

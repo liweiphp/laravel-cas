@@ -1,4 +1,4 @@
-<?php namespace Sentrasoft\Cas\Facades;
+<?php namespace ncmps\Cas\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
