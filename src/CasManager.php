@@ -1,4 +1,4 @@
-<?php namespace nc\Cas;
+<?php namespace ncmps\Cas;
 
 use Illuminate\Support\Manager;
 use phpCAS;
