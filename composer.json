@@ -43,7 +43,6 @@
             "ncmps\\Cas\\Tests\\": "tests/"
         }
     },
-    "minimum-stability": "stable",
     "extra": {
         "laravel": {
             "providers": [
