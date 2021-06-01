@@ -1,6 +1,6 @@
 <?php
 
-namespace Sentrasoft\Cas;
+namespace nc\Cas;
 
 use ArrayAccess;
 

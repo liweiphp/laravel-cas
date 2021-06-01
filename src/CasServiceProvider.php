@@ -1,4 +1,4 @@
-<?php namespace Sentrasoft\Cas;
+<?php namespace nc\Cas;
 
 use Illuminate\Support\ServiceProvider;
 

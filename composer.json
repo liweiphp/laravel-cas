@@ -1,5 +1,5 @@
 {
-    "name": "sentrasoft/laravel-cas",
+    "name": "nc/laravel-cas",
     "description": "Apereo CAS Authentication for Laravel",
     "keywords": [
         "cas",
@@ -7,10 +7,10 @@
         "sso",
         "laravel"
     ],
-    "homepage": "https://github.com/sentrasoft/laravel-cas",
+    "homepage": "https://github.com/liweiphp/laravel-cas",
     "support": {
-        "issues": "https://github.com/sentrasoft/laravel-cas/issues",
-        "source": "https://github.com/sentrasoft/laravel-cas"
+        "issues": "https://github.com/liweiphp/laravel-cas/issues",
+        "source": "https://github.com/liweiphp/laravel-cas"
     },
     "license": "MIT",
     "type": "library",
@@ -32,7 +32,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Sentrasoft\\Cas\\": "src/"
+            "nc\\Cas\\": "src/"
         },
         "files": [
             "src/Helper.php"
@@ -40,17 +40,17 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Sentrasoft\\Cas\\Tests\\": "tests/"
+            "nc\\Cas\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "stable",
     "extra": {
         "laravel": {
             "providers": [
-                "Sentrasoft\\Cas\\CasServiceProvider"
+                "nc\\Cas\\CasServiceProvider"
             ],
             "aliases": {
-                "Cas": "Sentrasoft\\Cas\\Facades\\Cas"
+                "Cas": "nc\\Cas\\Facades\\Cas"
             }
         }
     }
