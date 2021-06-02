@@ -97,7 +97,13 @@ class CasManager extends Manager implements Contracts\Factory
 	{
 		return $this;
 	}
-
+	/**
+	 * 设置base_url
+	 */
+	public function setFixedServiceURL($url)
+	{
+		phpCAS::setFixedServiceURL($url);
+	}
 	/**
 	 * Configure CAS Client|Proxy
 	 *

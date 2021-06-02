@@ -1,6 +1,6 @@
 <?php
 
-namespace nc\Cas;
+namespace ncmps\Cas;
 
 use ArrayAccess;
 
