@@ -1,5 +1,6 @@
 <?php namespace ncmps\Cas;
 
+use Illuminate\Log\Logger;
 use Illuminate\Support\Manager;
 use phpCAS;
 
@@ -46,11 +47,11 @@ class CasManager extends Manager implements Contracts\Factory
 		$this->parseConfig($config);
 
 		if ( $this->config['cas_debug'] === true ) {
-			phpCAS::setDebug();
+			phpCAS::setLogger(app('log'));
 			phpCAS::log( 'Loaded configuration:' . PHP_EOL
 			             . serialize( $config ) );
 		} else {
-			phpCAS::setDebug( $this->config['cas_debug'] );
+			phpCAS::setLogger();
 		}
 
 		phpCAS::setVerbose( $this->config['cas_verbose_errors'] );
@@ -103,6 +104,13 @@ class CasManager extends Manager implements Contracts\Factory
 	public function setFixedServiceURL($url)
 	{
 		phpCAS::setFixedServiceURL($url);
+	}
+	/**
+	 * 获取client
+	 */
+	public function getClient()
+	{
+		return phpCAS::getCasClient();
 	}
 	/**
 	 * Configure CAS Client|Proxy
@@ -213,7 +221,8 @@ class CasManager extends Manager implements Contracts\Factory
 			$callback_url = url($callback_url);
 
 		if(phpCAS::isAuthenticated()) {
-            return redirect($callback_url);
+            // return redirect($callback_url);
+			return true;
         }
         else {
 			return phpCAS::forceAuthentication($callback_url);
