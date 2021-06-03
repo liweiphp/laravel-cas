@@ -1,7 +1,7 @@
 # Apereo CAS Authentication for Laravel
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NU3XK7VXYTYKY)
-[![Latest Stable Version](https://poser.pugx.org/sentrasoft/laravel-cas/v/stable)](https://packagist.org/packages/sentrasoft/laravel-cas)
+[![Latest Stable Version](https://poser.pugx.org/ncmps/laravel-cas/v/stable)](https://packagist.org/packages/sentrasoft/laravel-cas)
 [![Total Downloads](https://poser.pugx.org/sentrasoft/laravel-cas/downloads)](https://packagist.org/packages/sentrasoft/laravel-cas)
 [![Monthly Downloads](https://poser.pugx.org/sentrasoft/laravel-cas/d/monthly)](https://packagist.org/packages/sentrasoft/laravel-cas)
 [![Latest Unstable Version](https://poser.pugx.org/sentrasoft/laravel-cas/v/unstable)](https://packagist.org/packages/sentrasoft/laravel-cas)
@@ -14,13 +14,13 @@ Easy Bring to CAS Authentication for Laravel
 #### Via Composer
 
 ``` php
-$ composer require sentrasoft/laravel-cas
+$ composer require ncmps/laravel-cas
 ```
 
 #### Via edit `composer.json`
 
 	"require": {
-		"sentrasoft/laravel-cas": "dev-master"
+		"ncmps/laravel-cas": "dev-master"
 	}
 
 Next, update Composer from the Terminal:
@@ -36,7 +36,7 @@ After updating composer, add the ServiceProvider to the providers array in `conf
 ```php
 'providers' => array(
     .....
-    Sentrasoft\Cas\CasServiceProvider::class,
+    ncmps\Cas\CasServiceProvider::class,
 );
 ```
 
@@ -45,19 +45,19 @@ Now add the alias in `config/app.php`.
 ```php
 'aliases' => array(
     ......
-    'Cas' => Sentrasoft\Cas\Facades\Cas::class,
+    'Cas' => ncmps\Cas\Facades\Cas::class,
 );
 ```
 
 Add the middelware to your `Kernel.php` file or leverage your own:
 ```php
-'cas.auth'  => \Sentrasoft\Cas\Middleware\Authenticate::class,
-'cas.guest' => \Sentrasoft\Cas\Middleware\RedirectIfAuthenticated::class,
+'cas.auth'  => \ncmps\Cas\Middleware\Authenticate::class,
+'cas.guest' => \ncmps\Cas\Middleware\RedirectIfAuthenticated::class,
 ```
 
 Now publish the configuration `cas.php` file:
 ``` php
-$ php artisan vendor:publish --provider="Sentrasoft\Cas\CasServiceProvider" --tag="config"
+$ php artisan vendor:publish --provider="ncmps\Cas\CasServiceProvider" --tag="config"
 ```
 
 Add new environment variables below to your `.env`
@@ -179,7 +179,6 @@ $value = Cas::user()->getAttribute('key');
 ```
 
 ## Support Us
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NU3XK7VXYTYKY)
 
 Help us to keep making awesome stuff. You don't have to be a developer to support our open source work. If you want to receive personal support, or just feel all warm and fuzzy inside from helping open source development, donations are very welcome. Thank you.
 
