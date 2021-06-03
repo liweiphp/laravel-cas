@@ -1,5 +1,6 @@
 <?php namespace ncmps\Cas;
 
+use CAS_GracefullTerminationException;
 use Illuminate\Log\Logger;
 use Illuminate\Support\Manager;
 use phpCAS;
@@ -39,10 +40,12 @@ class CasManager extends Manager implements Contracts\Factory
 	 */
 	protected $_cas_user_attributes;
 
+	protected $_error;
 	/**
 	 * @param array $config
 	 */
 	public function __construct($app, array $config ) {
+		ob_start();
 		$this->app = $app;
 		$this->parseConfig($config);
 
@@ -67,8 +70,17 @@ class CasManager extends Manager implements Contracts\Factory
 				env( 'HTTPS_ONLY_COOKIES' ),
 				$this->config['cas_session_httponly'] );
 		}
+		//cas error时候不退出
+		CAS_GracefullTerminationException::throwInsteadOfExiting();
 
-		$this->configureCas( $this->config['cas_proxy'] ? 'proxy' : 'client' );
+		try{
+			$this->configureCas( $this->config['cas_proxy'] ? 'proxy' : 'client' );
+		} catch (CAS_GracefullTerminationException $e) {
+			phpCAS::log('cas construct error:' . $e->getMessage());
+			$this->_error = ob_get_clean();
+			return ;
+		}
+
 
 		$this->configureCasValidation();
 
@@ -113,6 +125,17 @@ class CasManager extends Manager implements Contracts\Factory
 		return phpCAS::getCasClient();
 	}
 	/**
+	 * 是否成功初始化client
+	 */
+	public function isInitialized()
+	{
+		return phpCAS::isInitialized();
+	}
+	public function getError()
+	{
+		return $this->_error;
+	}
+	/**
 	 * Configure CAS Client|Proxy
 	 *
 	 * @param $method
@@ -140,8 +163,8 @@ class CasManager extends Manager implements Contracts\Factory
 			phpCAS::$method( $server_type, $this->config['cas_hostname'],
 				(int) $this->config['cas_port'],
 				$this->config['cas_uri'], $this->config['cas_control_session'] );
+
 		}
-		
 		if ( $this->config['cas_enable_saml'] ) {
 			// Handle SAML logout requests that emanate from the CAS host exclusively.
 			// Failure to restrict SAML logout requests to authorized hosts could
@@ -216,12 +239,12 @@ class CasManager extends Manager implements Contracts\Factory
 		if ( $this->isMasquerading() ) {
 			return redirect($callback_url);
 		}
-
+		
 		if(empty($callback_url) || $callback_url == '/cas/callback')
-			$callback_url = url($callback_url);
-
+		$callback_url = url($callback_url);
+		
 		if(phpCAS::isAuthenticated()) {
-            // return redirect($callback_url);
+			// return redirect($callback_url);
 			return true;
         }
         else {
@@ -341,8 +364,11 @@ class CasManager extends Manager implements Contracts\Factory
 		if(session()->has('cas_user')) {
             session()->forget('cas_user');
         }
-
-		phpCAS::logout( $params );
+		try{
+			phpCAS::logout( $params );
+		} catch (CAS_GracefullTerminationException $e) {
+			phpCAS::log('cas logout error:' . $e->getMessage());
+		}
 		exit;
 	}
 
